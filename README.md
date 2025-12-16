@@ -71,5 +71,5 @@ Use [Directus MCP Server](https://directus.io/tv/directus-mcp-server) with Claud
 
 ## Directus Access
 
-- URL: http://192.168.1.204:8055
+- URL: http://192.168.1.108:8055 (via K8s LoadBalancer)
 - Credentials: Stored in Vault at `secret/directus`
