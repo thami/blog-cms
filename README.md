@@ -13,10 +13,10 @@ This repo manages the Directus CMS backend for [blog.thamimagi.dev](https://blog
 See [Directus CMS Development Workflow](https://github.com/thami/kubernetes-spec-kit/blob/main/.spec/architecture/directus-cms-workflow.md) for the full architecture documentation.
 
 ```
-┌─────────────────────┐     ┌──────────────────────┐     ┌─────────────────────┐
-│   Directus CMS      │     │    GitHub Actions    │     │   K3s Cluster       │
-│  (K3s Cluster)      │────>│  (Repository Dispatch)│────>│  (Blog Deployment)  │
-└─────────────────────┘     └──────────────────────┘     └─────────────────────┘
+┌─────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────┐
+│   Directus CMS      │     │    GitHub Actions       │     │   K3s Cluster       │
+│  (K3s Cluster)      │────>│  (Repository Dispatch)  │────>│  (Blog Deployment)  │
+└─────────────────────┘     └─────────────────────────┘     └─────────────────────┘
 ```
 
 ## Structure
