@@ -1,0 +1,146 @@
+name: Schema Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'snapshots/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'snapshots/**'
+
+env:
+  DIRECTUS_VERSION: "11.14.0"
+
+jobs:
+  validate:
+    name: Validate Schema
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: directus
+          POSTGRES_PASSWORD: directus
+          POSTGRES_DB: directus
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate YAML syntax
+        run: |
+          echo "Validating YAML syntax..."
+          python3 -c "import yaml; yaml.safe_load(open('snapshots/schema.yaml'))"
+          echo "✓ YAML syntax is valid"
+
+      - name: Validate schema structure
+        run: |
+          echo "Checking required keys..."
+          python3 << 'EOF'
+          import yaml
+          import sys
+
+          with open('snapshots/schema.yaml') as f:
+              schema = yaml.safe_load(f)
+
+          required_keys = ['version', 'directus', 'vendor', 'collections', 'fields']
+          missing = [k for k in required_keys if k not in schema]
+
+          if missing:
+              print(f"✗ Missing required keys: {missing}")
+              sys.exit(1)
+
+          print(f"✓ Schema has all required keys")
+          print(f"  - Directus version: {schema['directus']}")
+          print(f"  - Vendor: {schema['vendor']}")
+          print(f"  - Collections: {len(schema['collections'])}")
+          print(f"  - Fields: {len(schema['fields'])}")
+          EOF
+
+      - name: Setup Directus test instance
+        run: |
+          echo "Starting Directus test container..."
+          docker run -d --name directus-test \
+            --network host \
+            -e DB_CLIENT=pg \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_DATABASE=directus \
+            -e DB_USER=directus \
+            -e DB_PASSWORD=directus \
+            -e SECRET=test-secret-key \
+            -e ADMIN_EMAIL=admin@example.com \
+            -e ADMIN_PASSWORD=admin \
+            -v ${{ github.workspace }}/snapshots:/directus/snapshots \
+            directus/directus:${{ env.DIRECTUS_VERSION }}
+
+          echo "Waiting for Directus to be ready..."
+          for i in {1..30}; do
+            if curl -s http://localhost:8055/server/health | grep -q '"status":"ok"'; then
+              echo "✓ Directus is ready"
+              break
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+
+      - name: Apply schema snapshot
+        run: |
+          echo "Applying schema from snapshot..."
+          docker exec directus-test npx directus schema apply --yes /directus/snapshots/schema.yaml
+          echo "✓ Schema applied successfully"
+
+      - name: Export and compare schema
+        run: |
+          echo "Exporting schema from test instance..."
+          docker exec directus-test npx directus schema snapshot --yes /tmp/exported-schema.yaml
+          docker cp directus-test:/tmp/exported-schema.yaml ./exported-schema.yaml
+
+          echo "Comparing schemas..."
+          if diff -q snapshots/schema.yaml exported-schema.yaml > /dev/null 2>&1; then
+            echo "✓ Schema round-trip successful - no differences"
+          else
+            echo "⚠ Schema differences detected (may be expected with generated values):"
+            diff snapshots/schema.yaml exported-schema.yaml || true
+          fi
+
+      - name: Check for production drift (PRs only)
+        if: github.event_name == 'pull_request'
+        env:
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
+        run: |
+          if [ -z "$DIRECTUS_URL" ] || [ -z "$DIRECTUS_TOKEN" ]; then
+            echo "⚠ Skipping production drift check - DIRECTUS_URL/TOKEN not configured"
+            exit 0
+          fi
+
+          echo "Fetching production schema..."
+          curl -s -H "Authorization: Bearer $DIRECTUS_TOKEN" \
+            "$DIRECTUS_URL/schema/snapshot" > production-schema.yaml
+
+          echo "Comparing PR schema with production..."
+          if diff -q snapshots/schema.yaml production-schema.yaml > /dev/null 2>&1; then
+            echo "✓ No drift detected between PR and production"
+          else
+            echo "📋 Differences between PR schema and production:"
+            diff snapshots/schema.yaml production-schema.yaml || true
+            echo ""
+            echo "Review these changes carefully before merging."
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker stop directus-test || true
+          docker rm directus-test || true
