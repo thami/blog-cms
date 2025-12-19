@@ -1,133 +1,37 @@
 version: 1
-directus: 11.3.5
+directus: 11.14.0
 vendor: postgres
 collections:
-  - collection: categories
+  - collection: ai_prompts
     meta:
       accountability: all
       archive_app_filter: true
-      archive_field: null
-      archive_value: null
+      archive_field: status
+      archive_value: archived
       collapse: open
-      collection: categories
+      collection: ai_prompts
       color: null
       display_template: null
       group: null
       hidden: false
-      icon: folder
-      item_duplication_fields: null
-      note: Blog categories
-      preview_url: null
-      singleton: false
-      sort: null
-      sort_field: null
-      translations: null
-      unarchive_value: null
-      versioning: false
-    schema:
-      name: categories
-  - collection: posts
-    meta:
-      accountability: all
-      archive_app_filter: true
-      archive_field: null
-      archive_value: null
-      collapse: open
-      collection: posts
-      color: null
-      display_template: null
-      group: null
-      hidden: false
-      icon: article
-      item_duplication_fields: null
-      note: Blog posts
-      preview_url: null
-      singleton: false
-      sort: null
-      sort_field: null
-      translations: null
-      unarchive_value: null
-      versioning: false
-    schema:
-      name: posts
-  - collection: posts_categories
-    meta:
-      accountability: all
-      archive_app_filter: true
-      archive_field: null
-      archive_value: null
-      collapse: open
-      collection: posts_categories
-      color: null
-      display_template: null
-      group: null
-      hidden: true
-      icon: import_export
+      icon: magic_button
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: false
       sort: null
-      sort_field: null
+      sort_field: sort
       translations: null
-      unarchive_value: null
+      unarchive_value: draft
       versioning: false
     schema:
-      name: posts_categories
-  - collection: posts_tags
-    meta:
-      accountability: all
-      archive_app_filter: true
-      archive_field: null
-      archive_value: null
-      collapse: open
-      collection: posts_tags
-      color: null
-      display_template: null
-      group: null
-      hidden: true
-      icon: import_export
-      item_duplication_fields: null
-      note: null
-      preview_url: null
-      singleton: false
-      sort: null
-      sort_field: null
-      translations: null
-      unarchive_value: null
-      versioning: false
-    schema:
-      name: posts_tags
-  - collection: tags
-    meta:
-      accountability: all
-      archive_app_filter: true
-      archive_field: null
-      archive_value: null
-      collapse: open
-      collection: tags
-      color: null
-      display_template: null
-      group: null
-      hidden: false
-      icon: label
-      item_duplication_fields: null
-      note: Blog tags
-      preview_url: null
-      singleton: false
-      sort: null
-      sort_field: null
-      translations: null
-      unarchive_value: null
-      versioning: false
-    schema:
-      name: tags
+      name: ai_prompts
 fields:
-  - collection: categories
+  - collection: ai_prompts
     field: id
     type: uuid
     meta:
-      collection: categories
+      collection: ai_prompts
       conditions: null
       display: null
       display_options: null
@@ -137,18 +41,19 @@ fields:
       interface: input
       note: null
       options: null
-      readonly: true
+      readonly: false
       required: false
+      searchable: true
       sort: 1
       special:
         - uuid
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
       name: id
-      table: categories
+      table: ai_prompts
       data_type: uuid
       default_value: null
       max_length: null
@@ -163,317 +68,37 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: categories
-    field: name
-    type: string
+  - collection: ai_prompts
+    field: sort
+    type: integer
     meta:
-      collection: categories
+      collection: ai_prompts
       conditions: null
       display: null
       display_options: null
-      field: name
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 2
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: name
-      table: categories
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: categories
-    field: slug
-    type: string
-    meta:
-      collection: categories
-      conditions: null
-      display: null
-      display_options: null
-      field: slug
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: slug
-      table: categories
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: categories
-    field: description
-    type: text
-    meta:
-      collection: categories
-      conditions: null
-      display: null
-      display_options: null
-      field: description
-      group: null
-      hidden: false
-      interface: input-multiline
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 4
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: description
-      table: categories
-      data_type: text
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: id
-    type: uuid
-    meta:
-      collection: posts
-      conditions: null
-      display: null
-      display_options: null
-      field: id
+      field: sort
       group: null
       hidden: true
       interface: input
       note: null
       options: null
-      readonly: true
-      required: false
-      sort: 1
-      special:
-        - uuid
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: id
-      table: posts
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: true
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: status
-    type: string
-    meta:
-      collection: posts
-      conditions: null
-      display: labels
-      display_options: null
-      field: status
-      group: null
-      hidden: false
-      interface: select-dropdown
-      note: null
-      options:
-        choices:
-          - text: Draft
-            value: draft
-          - text: Published
-            value: published
-          - text: Archived
-            value: archived
       readonly: false
       required: false
+      searchable: true
       sort: 2
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: status
-      table: posts
-      data_type: character varying
-      default_value: draft
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: title
-    type: string
-    meta:
-      collection: posts
-      conditions: null
-      display: null
-      display_options: null
-      field: title
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: title
-      table: posts
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: slug
-    type: string
-    meta:
-      collection: posts
-      conditions: null
-      display: null
-      display_options: null
-      field: slug
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 4
       special: null
       translations: null
       validation: null
       validation_message: null
       width: half
     schema:
-      name: slug
-      table: posts
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: excerpt
-    type: text
-    meta:
-      collection: posts
-      conditions: null
-      display: null
-      display_options: null
-      field: excerpt
-      group: null
-      hidden: false
-      interface: input-multiline
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 5
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: excerpt
-      table: posts
-      data_type: text
+      name: sort
+      table: ai_prompts
+      data_type: integer
       default_value: null
       max_length: null
-      numeric_precision: null
-      numeric_scale: null
+      numeric_precision: 32
+      numeric_scale: 0
       is_nullable: true
       is_unique: false
       is_indexed: false
@@ -483,53 +108,15 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: posts
-    field: content
-    type: text
-    meta:
-      collection: posts
-      conditions: null
-      display: null
-      display_options: null
-      field: content
-      group: null
-      hidden: false
-      interface: input-rich-text-md
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 6
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: content
-      table: posts
-      data_type: text
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
+  - collection: ai_prompts
     field: date_created
     type: timestamp
     meta:
-      collection: posts
+      collection: ai_prompts
       conditions: null
-      display: null
-      display_options: null
+      display: datetime
+      display_options:
+        relative: true
       field: date_created
       group: null
       hidden: true
@@ -538,7 +125,8 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 7
+      searchable: true
+      sort: 3
       special:
         - date-created
       translations: null
@@ -547,9 +135,9 @@ fields:
       width: half
     schema:
       name: date_created
-      table: posts
+      table: ai_prompts
       data_type: timestamp with time zone
-      default_value: null
+      default_value: CURRENT_TIMESTAMP
       max_length: null
       numeric_precision: null
       numeric_scale: null
@@ -562,14 +150,57 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: posts
+  - collection: ai_prompts
+    field: user_created
+    type: uuid
+    meta:
+      collection: ai_prompts
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: ai_prompts
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: ai_prompts
     field: date_updated
     type: timestamp
     meta:
-      collection: posts
+      collection: ai_prompts
       conditions: null
-      display: null
-      display_options: null
+      display: datetime
+      display_options:
+        relative: true
       field: date_updated
       group: null
       hidden: true
@@ -578,7 +209,8 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 8
+      searchable: true
+      sort: 5
       special:
         - date-updated
       translations: null
@@ -587,7 +219,7 @@ fields:
       width: half
     schema:
       name: date_updated
-      table: posts
+      table: ai_prompts
       data_type: timestamp with time zone
       default_value: null
       max_length: null
@@ -602,32 +234,35 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: posts
-    field: publish_date
-    type: timestamp
+  - collection: ai_prompts
+    field: user_updated
+    type: uuid
     meta:
-      collection: posts
+      collection: ai_prompts
       conditions: null
-      display: null
+      display: user
       display_options: null
-      field: publish_date
+      field: user_updated
       group: null
-      hidden: false
-      interface: datetime
+      hidden: true
+      interface: select-dropdown-m2o
       note: null
-      options: null
-      readonly: false
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
       required: false
-      sort: 9
-      special: null
+      searchable: true
+      sort: 6
+      special:
+        - user-updated
       translations: null
       validation: null
       validation_message: null
       width: half
     schema:
-      name: publish_date
-      table: posts
-      data_type: timestamp with time zone
+      name: user_updated
+      table: ai_prompts
+      data_type: uuid
       default_value: null
       max_length: null
       numeric_precision: null
@@ -639,338 +274,56 @@ fields:
       is_generated: false
       generation_expression: null
       has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts
-    field: featured_image
-    type: uuid
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: ai_prompts
+    field: meta_prompts_notice
+    type: alias
     meta:
-      collection: posts
+      collection: ai_prompts
       conditions: null
-      display: image
+      display: null
       display_options: null
-      field: featured_image
+      field: meta_prompts_notice
       group: null
       hidden: false
-      interface: file-image
+      interface: presentation-notice
       note: null
-      options: null
+      options:
+        icon: info
+        text: $t:mcp_prompts_collection_schema.meta_prompts_notice
       readonly: false
       required: false
-      sort: 10
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: featured_image
-      table: posts
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: directus_files
-      foreign_key_column: id
-  - collection: posts_categories
-    field: id
-    type: integer
-    meta:
-      collection: posts_categories
-      conditions: null
-      display: null
-      display_options: null
-      field: id
-      group: null
-      hidden: true
-      interface: null
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 1
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: id
-      table: posts_categories
-      data_type: integer
-      default_value: nextval('posts_categories_id_seq'::regclass)
-      max_length: null
-      numeric_precision: 32
-      numeric_scale: 0
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: true
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: true
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts_categories
-    field: posts_id
-    type: uuid
-    meta:
-      collection: posts_categories
-      conditions: null
-      display: null
-      display_options: null
-      field: posts_id
-      group: null
-      hidden: true
-      interface: select-dropdown-m2o
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 2
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: posts_id
-      table: posts_categories
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: posts
-      foreign_key_column: id
-  - collection: posts_categories
-    field: categories_id
-    type: uuid
-    meta:
-      collection: posts_categories
-      conditions: null
-      display: null
-      display_options: null
-      field: categories_id
-      group: null
-      hidden: true
-      interface: select-dropdown-m2o
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: categories_id
-      table: posts_categories
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: categories
-      foreign_key_column: id
-  - collection: posts_tags
-    field: id
-    type: integer
-    meta:
-      collection: posts_tags
-      conditions: null
-      display: null
-      display_options: null
-      field: id
-      group: null
-      hidden: true
-      interface: null
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 1
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: id
-      table: posts_tags
-      data_type: integer
-      default_value: nextval('posts_tags_id_seq'::regclass)
-      max_length: null
-      numeric_precision: 32
-      numeric_scale: 0
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: true
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: true
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: posts_tags
-    field: posts_id
-    type: uuid
-    meta:
-      collection: posts_tags
-      conditions: null
-      display: null
-      display_options: null
-      field: posts_id
-      group: null
-      hidden: true
-      interface: select-dropdown-m2o
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 2
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: posts_id
-      table: posts_tags
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: posts
-      foreign_key_column: id
-  - collection: posts_tags
-    field: tags_id
-    type: uuid
-    meta:
-      collection: posts_tags
-      conditions: null
-      display: null
-      display_options: null
-      field: tags_id
-      group: null
-      hidden: true
-      interface: select-dropdown-m2o
-      note: null
-      options: null
-      readonly: false
-      required: false
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: tags_id
-      table: posts_tags
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: tags
-      foreign_key_column: id
-  - collection: tags
-    field: id
-    type: uuid
-    meta:
-      collection: tags
-      conditions: null
-      display: null
-      display_options: null
-      field: id
-      group: null
-      hidden: true
-      interface: input
-      note: null
-      options: null
-      readonly: true
-      required: false
-      sort: 1
+      searchable: true
+      sort: 7
       special:
-        - uuid
+        - alias
+        - no-data
       translations: null
       validation: null
       validation_message: null
       width: full
-    schema:
-      name: id
-      table: tags
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: true
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: tags
+  - collection: ai_prompts
     field: name
     type: string
     meta:
-      collection: tags
+      collection: ai_prompts
       conditions: null
-      display: null
-      display_options: null
+      display: formatted-value
+      display_options:
+        font: monospace
       field: name
       group: null
       hidden: false
       interface: input
       note: null
-      options: null
+      options:
+        slug: true
+        trim: true
       readonly: false
       required: true
-      sort: 2
+      searchable: true
+      sort: 8
       special: null
       translations: null
       validation: null
@@ -978,13 +331,79 @@ fields:
       width: half
     schema:
       name: name
-      table: tags
+      table: ai_prompts
       data_type: character varying
       default_value: null
       max_length: 255
       numeric_precision: null
       numeric_scale: null
-      is_nullable: false
+      is_nullable: true
+      is_unique: true
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: ai_prompts
+    field: status
+    type: string
+    meta:
+      collection: ai_prompts
+      conditions: null
+      display: labels
+      display_options:
+        choices:
+          - background: var(--theme--primary-background)
+            color: var(--theme--primary)
+            foreground: var(--theme--primary)
+            text: $t:published
+            value: published
+          - background: var(--theme--background-normal)
+            color: var(--theme--foreground)
+            foreground: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - background: var(--theme--warning-background)
+            color: var(--theme--warning)
+            foreground: var(--theme--warning)
+            text: $t:archived
+            value: archived
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - color: var(--theme--primary)
+            text: $t:published
+            value: published
+          - color: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - color: var(--theme--warning)
+            text: $t:archived
+            value: archived
+      readonly: false
+      required: false
+      searchable: true
+      sort: 9
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: status
+      table: ai_prompts
+      data_type: character varying
+      default_value: draft
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
       is_unique: false
       is_indexed: false
       is_primary_key: false
@@ -993,38 +412,39 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: tags
-    field: slug
-    type: string
+  - collection: ai_prompts
+    field: description
+    type: text
     meta:
-      collection: tags
+      collection: ai_prompts
       conditions: null
       display: null
       display_options: null
-      field: slug
+      field: description
       group: null
       hidden: false
       interface: input
       note: null
       options: null
       readonly: false
-      required: true
-      sort: 3
+      required: false
+      searchable: true
+      sort: 10
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: half
+      width: full
     schema:
-      name: slug
-      table: tags
-      data_type: character varying
+      name: description
+      table: ai_prompts
+      data_type: text
       default_value: null
-      max_length: 255
+      max_length: null
       numeric_precision: null
       numeric_scale: null
-      is_nullable: false
-      is_unique: true
+      is_nullable: true
+      is_unique: false
       is_indexed: false
       is_primary_key: false
       is_generated: false
@@ -1032,109 +452,183 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: ai_prompts
+    field: system_prompt
+    type: text
+    meta:
+      collection: ai_prompts
+      conditions: null
+      display: null
+      display_options: null
+      field: system_prompt
+      group: null
+      hidden: false
+      interface: input-rich-text-md
+      note: $t:mcp_prompts_collection_schema.system_prompt_note
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 11
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: system_prompt
+      table: ai_prompts
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: ai_prompts
+    field: messages
+    type: json
+    meta:
+      collection: ai_prompts
+      conditions: null
+      display: formatted-json-value
+      display_options:
+        format: '{{ role }} • {{ text }}'
+      field: messages
+      group: null
+      hidden: false
+      interface: list
+      note: $t:mcp_prompts_collection_schema.messages_note
+      options:
+        addLabel: New Message
+        fields:
+          - field: role
+            meta:
+              display: labels
+              display_options:
+                choices:
+                  - icon: person
+                    text: $t:mcp_prompts_collection_schema.messages_role_user
+                    value: user
+                  - icon: smart_toy
+                    text: $t:mcp_prompts_collection_schema.messages_role_assistant
+                    value: assistant
+              field: role
+              interface: select-dropdown
+              note: $t:mcp_prompts_collection_schema.messages_role_note
+              options:
+                choices:
+                  - icon: person
+                    text: $t:mcp_prompts_collection_schema.messages_role_user
+                    value: user
+                  - icon: smart_toy
+                    text: $t:mcp_prompts_collection_schema.messages_role_assistant
+                    value: assistant
+              required: true
+              type: string
+              width: full
+            name: role
+            type: string
+          - field: text
+            meta:
+              display: formatted-value
+              display_options:
+                format: true
+              field: text
+              interface: input-rich-text-md
+              note: >-
+                The actual content of the message. You can use {{ curly_braces
+                }} for placeholders that will be replaced with real data.
+              required: true
+              type: text
+              width: full
+            name: text
+            type: text
+        showConfirmDiscard: true
+        template: '{{ role }} • {{ text }}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 12
+      special:
+        - cast-json
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: messages
+      table: ai_prompts
+      data_type: json
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+systemFields:
+  - collection: directus_activity
+    field: timestamp
+    schema:
+      is_indexed: true
+  - collection: directus_revisions
+    field: parent
+    schema:
+      is_indexed: true
 relations:
-  - collection: posts
-    field: featured_image
-    related_collection: directus_files
+  - collection: ai_prompts
+    field: user_updated
+    related_collection: directus_users
     meta:
       junction_field: null
-      many_collection: posts
-      many_field: featured_image
+      many_collection: ai_prompts
+      many_field: user_updated
       one_allowed_collections: null
-      one_collection: directus_files
+      one_collection: directus_users
       one_collection_field: null
       one_deselect_action: nullify
       one_field: null
       sort_field: null
     schema:
-      table: posts
-      column: featured_image
-      foreign_key_table: directus_files
+      table: ai_prompts
+      column: user_updated
+      foreign_key_table: directus_users
       foreign_key_column: id
-      constraint_name: posts_featured_image_foreign
+      constraint_name: ai_prompts_user_updated_foreign
       on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: posts_categories
-    field: posts_id
-    related_collection: posts
+      on_delete: NO ACTION
+  - collection: ai_prompts
+    field: user_created
+    related_collection: directus_users
     meta:
-      junction_field: categories_id
-      many_collection: posts_categories
-      many_field: posts_id
+      junction_field: null
+      many_collection: ai_prompts
+      many_field: user_created
       one_allowed_collections: null
-      one_collection: posts
+      one_collection: directus_users
       one_collection_field: null
       one_deselect_action: nullify
-      one_field: categories
+      one_field: null
       sort_field: null
     schema:
-      table: posts_categories
-      column: posts_id
-      foreign_key_table: posts
+      table: ai_prompts
+      column: user_created
+      foreign_key_table: directus_users
       foreign_key_column: id
-      constraint_name: posts_categories_posts_id_foreign
+      constraint_name: ai_prompts_user_created_foreign
       on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: posts_categories
-    field: categories_id
-    related_collection: categories
-    meta:
-      junction_field: posts_id
-      many_collection: posts_categories
-      many_field: categories_id
-      one_allowed_collections: null
-      one_collection: categories
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: posts
-      sort_field: null
-    schema:
-      table: posts_categories
-      column: categories_id
-      foreign_key_table: categories
-      foreign_key_column: id
-      constraint_name: posts_categories_categories_id_foreign
-      on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: posts_tags
-    field: posts_id
-    related_collection: posts
-    meta:
-      junction_field: tags_id
-      many_collection: posts_tags
-      many_field: posts_id
-      one_allowed_collections: null
-      one_collection: posts
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: tags
-      sort_field: null
-    schema:
-      table: posts_tags
-      column: posts_id
-      foreign_key_table: posts
-      foreign_key_column: id
-      constraint_name: posts_tags_posts_id_foreign
-      on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: posts_tags
-    field: tags_id
-    related_collection: tags
-    meta:
-      junction_field: posts_id
-      many_collection: posts_tags
-      many_field: tags_id
-      one_allowed_collections: null
-      one_collection: tags
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: posts
-      sort_field: null
-    schema:
-      table: posts_tags
-      column: tags_id
-      foreign_key_table: tags
-      foreign_key_column: id
-      constraint_name: posts_tags_tags_id_foreign
-      on_update: NO ACTION
-      on_delete: SET NULL
+      on_delete: NO ACTION
