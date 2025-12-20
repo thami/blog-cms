@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "Bash(npx:*)",
+      "Bash(npm:*)",
+      "Bash(git:*)",
+      "Bash(ls:*)",
+      "mcp__directus__*"
+    ],
+    "deny": []
+  }
+}
